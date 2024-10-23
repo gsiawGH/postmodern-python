@@ -20,12 +20,12 @@ readme = "README.md"
 requires-python = "~= 3.12"
 
 dependencies = [
-    "pydantic~=2.8.2",
+    "pydantic~=2.9.1"
 ]
 
 [project.scripts]
 # running `postmodern` will call this script
-"postmodern" = "postmodern.cli:main"
+"postmodern" = "postmodern.memory_example:main"
 
 [build-system]
 requires = ["pdm-backend"]
@@ -34,8 +34,9 @@ build-backend = "pdm.backend"
 [tool.rye]
 managed = true
 dev-dependencies = [
-    "pytest~=8.2.2",
-    "pyright~=1.1.372",
+    "pytest~=8.3.3", 
+    "pyright~=1.1.386", 
+    "coverage>=7.6.4"
 ]
 
 [tool.ruff]
@@ -49,12 +50,12 @@ line-length = 120
 # https://docs.astral.sh/ruff/rules/
 # here's a couple to start with
 select = [
-  "A",    # warn about shadowing built-ins
-  "E",    # style stuff, whitespaces
-  "F",    # important pyflakes lints
-  "I",    # import sorting
-  "N",    # naming
-  "T100", # breakpoints (probably don't want these in prod!)
+    "A",    # warn about shadowing built-ins
+    "E",    # style stuff, whitespaces
+    "F",    # important pyflakes lints
+    "I",    # import sorting
+    "N",    # naming
+    "T100", # breakpoints (probably don't want these in prod!)
 ]
 # if you're feeling confident you can do:
 # select = ["ALL"]
@@ -72,3 +73,17 @@ strict = ["**/*.py"]
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules"
+
+[tool.coverage.run]
+source = ["postmodern", "tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "pass",
+    "except ImportError:",
+]
+show_missing=true

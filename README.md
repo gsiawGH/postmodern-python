@@ -14,6 +14,7 @@ It includes the following bits:
 - Another for releasing to PyPI
 - A basic Dockerfile for running in a container
 - Some basic Python snippets to get you started
+- coverage
 - The rest of this README!
 
 ## 🤔 How to use this template
@@ -27,42 +28,41 @@ It includes the following bits:
 5. Have a look at the stuff below here, try out some commands and edit this README as you like!
 
 ## 💾 Installation
+assumes you have [Rye](https://rye.astral.sh/) installed for development (installation instructions at the link).
+
 ```bash
 git clone git@github.com:carderne/postmodern-python.git
 cd postmodern-python
-pip install -e .
+rye sync; # Install Python and dependencies
+source .venv/bin/activate
 ```
 
 ## 🚀 Usage
 From the command line:
 ```bash
 python -m postmodern  # thanks to __main__.py
-
 # or
 postmodern  # thanks to pyproject.toml, project.scripts
 ```
 
-From Python:
-```python
-from postmodern import hello
-hello()
-```
 
 ## 🧱 Development
-Using [Rye](https://rye.astral.sh/) for development (installation instructions at the link).
 
-Install Python and dependencies:
-```bash
-rye sync
-```
 
 Format, lint, typecheck etc:
 ```bash
 rye run fmt
         lint
-        check
+        check  # runs pyright
         test
         all   # runs all the above sequentially
+```
+
+look at [Makefile](Makefile) for quick examples.
+```bash
+# generate code coverage
+make rye.coverage
+make rye.coverage.report 
 ```
 
 ## 🦺 CI/CD
@@ -76,15 +76,12 @@ But you can change that!
 
 ### Docker
 It also has a Dockerfile that you can try out as follows:
-1. Build it
+
+look at [Makefile](Makefile) for quick examples.
 ```bash
-docker build --tag postmdoern-image .
+# build image
+make docker.build
+# run container
+make docker.run
 ```
 
-2. Run it
-```bash
-docker run --rm -it postmodern-image
-
-# output
-# I dunno, start the server or something?
-```
